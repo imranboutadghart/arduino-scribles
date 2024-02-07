@@ -1,26 +1,14 @@
+#include <Wire.h>
 #include <Adafruit_Sensor.h>
-
 #include <Adafruit_MPU6050.h>
-
 #include <SoftwareSerial.h>
+
 SoftwareSerial BLUETOOTH(2, 3);
-
-//Libraries
-#include <Wire.h>//https://www.arduino.cc/en/reference/wire
-
-//Objects
 Adafruit_MPU6050 mpu;
 
 void setup() {
-   //Init Serial USB
   Serial.begin(9600);
-  Serial.println(F("Initialize System"));
- if (!mpu.begin(0x69)) { // Change address if needed
-      Serial.println("Failed to find MPU6050 chip");
-      while (1) {
-          delay(10);
-      }
-  }
+  mpu.begin(0x69);
 
   mpu.setAccelerometerRange(MPU6050_RANGE_16_G);
   mpu.setGyroRange(MPU6050_RANGE_250_DEG);
@@ -32,31 +20,25 @@ void loop() {
   delay(100);
 }
 
-void readMPU( ) { /* function readMPU */
+void readMPU( ) {
   ////Read acceleromter data
   sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
 
-  /* Print out the values */
-  Serial.print("Acceleration X: ");
-  Serial.print(a.acceleration.x);
-  Serial.print(", Y: ");
-  Serial.print(a.acceleration.y);
-  Serial.print(", Z: ");
-  Serial.print(a.acceleration.z);
-  Serial.println(" m/s^2");
-
-  Serial.print("Rotation X: ");
-  Serial.print(g.gyro.x);
-  Serial.print(", Y: ");
-  Serial.print(g.gyro.y);
-  Serial.print(", Z: ");
-  Serial.print(g.gyro.z);
-  Serial.println(" rad/s");
-
-  Serial.print("Temperature: ");
-  Serial.print(temp.temperature);
-  Serial.println("°C");
+//  Serial.print("Acceleration(");
+//  Serial.print(a.acceleration.x);
+//  Serial.print(", ");
+//  Serial.print(a.acceleration.y);
+//  Serial.print(", ");
+//  Serial.print(a.acceleration.z);
+//  Serial.print(") m/s^2|");
+//  Serial.print("Rotation(");
+//  Serial.print(g.gyro.x);
+//  Serial.print(", ");
+//  Serial.print(g.gyro.y);
+//  Serial.print(", ");
+//  Serial.print(g.gyro.z);
+//  Serial.println(") rad/s");
 }
 
 
